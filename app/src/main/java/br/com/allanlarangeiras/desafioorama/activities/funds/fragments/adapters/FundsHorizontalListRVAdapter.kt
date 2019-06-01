@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
-import br.com.allanlarangeiras.desafioorama.utils.NumberUtils
+import br.com.allanlarangeiras.desafioorama.services.FundsService
 
 class FundsHorizontalListRVAdapter(
     val fundsList: List<Fund>): RecyclerView.Adapter<FundsHorizontalListRVAdapter.FundsViewHolder>() {
@@ -24,20 +24,9 @@ class FundsHorizontalListRVAdapter(
     override fun onBindViewHolder(holder: FundsViewHolder, positon: Int) {
         val fund = fundsList[positon]
         holder.simpleName.text = fund.simpleName
-        val m12 = fund.profitabilities.m12
-        var m12String = "-"
-        if (m12 > 0) {
-            m12String = "${NumberUtils.formatPercentage(m12 * 100)}% (12M)"
-        }
 
-        var applicationAmountString = fund.operability.minimumInitialApplicationAmount.toString()
-        val minimumInitialApplicationAmount = fund.operability.minimumInitialApplicationAmount
-        if (minimumInitialApplicationAmount > 0) {
-            applicationAmountString = "R$ ${NumberUtils.formatMoney(minimumInitialApplicationAmount)}"
-        }
-
-        holder.m12.text = m12String
-        holder.minimumApplication.text = applicationAmountString
+        holder.m12.text = FundsService.formatM12(fund.profitabilities.m12)
+        holder.minimumApplication.text = FundsService.formatAmount(fund.operability.minimumInitialApplicationAmount)
 
     }
 
