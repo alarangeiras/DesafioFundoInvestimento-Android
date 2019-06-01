@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.include_app_bar.*
 
 class FundsActivity : AppCompatActivity() {
 
-    private var funds:List<Fund> = mutableListOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_funds)
