@@ -1,7 +1,6 @@
 package br.com.allanlarangeiras.desafioorama.activities.splash
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -10,6 +9,7 @@ import br.com.allanlarangeiras.desafioorama.activities.funds.FundsActivity
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_splash_screen.*
+import java.io.Serializable
 
 class SplashScreenActivity: AppCompatActivity() {
 

@@ -7,5 +7,6 @@ data class Fund(
     @SerializedName("simple_name")
     val simpleName: String,
     val profitabilities: Profitabilities,
-    val operability: Operability
+    val operability: Operability,
+    val specification: Specification
 ): Serializable

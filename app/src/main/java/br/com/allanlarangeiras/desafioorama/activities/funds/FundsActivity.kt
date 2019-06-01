@@ -21,18 +21,26 @@ class FundsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_funds)
 
-
         val extras = intent.extras
-        this.funds = Gson().fromJson(extras?.getString("funds"), funds::class.java)
+        val jsonString = extras?.getString("funds")
+        this.funds = Gson().fromJson(jsonString, funds::class.java)
 
-        Log.i(this::class.java.simpleName, extras?.getString("funds"))
+        Log.i(this::class.java.simpleName, jsonString)
 
         toolbar.title = getText(R.string.funds)
         setSupportActionBar(toolbar)
 
+        val bundle = Bundle()
+        bundle.putString("funds", jsonString)
+
+        val topFundsFragment = TopFundsFragment()
+        topFundsFragment.arguments = bundle
+        val fundsListFragment = FundsListFragment()
+        fundsListFragment.arguments = bundle
+
         val tabAdapter = ListFundsTabAdapter(supportFragmentManager)
-        tabAdapter.addFragment(TopFundsFragment(), getString(R.string.top_funds))
-        tabAdapter.addFragment(FundsListFragment(), getString(R.string.funds_list))
+        tabAdapter.addFragment(topFundsFragment, getString(R.string.top_funds))
+        tabAdapter.addFragment(fundsListFragment, getString(R.string.funds_list))
 
         pager.adapter = tabAdapter
         tab.setupWithViewPager(pager)
