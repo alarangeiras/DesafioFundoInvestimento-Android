@@ -1,6 +1,7 @@
 package br.com.allanlarangeiras.desafioorama.activities.splash
 
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
+import br.com.allanlarangeiras.desafioorama.model.dto.Funds
 import br.com.allanlarangeiras.desafioorama.services.FundsService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +15,8 @@ class SplashScreenPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe {funds:List<Fund> ->
-                activity.goToHome(funds)
+                Funds.all = funds
+                activity.goToHome()
             }
     }
 

@@ -21,11 +21,9 @@ class SplashScreenActivity: AppCompatActivity() {
         splashScreenPresenter.getFunds()
     }
 
-    fun goToHome(funds: List<Fund>) {
+    fun goToHome() {
         val goToHome = Intent(this, FundsActivity::class.java)
-        goToHome.putExtra("funds", Gson().toJson(funds))
         hideProgressBar()
-        goToHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(goToHome)
     }
 

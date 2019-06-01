@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.FundsListGroupRVAdapter
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
+import br.com.allanlarangeiras.desafioorama.model.dto.Funds
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -23,9 +23,7 @@ class FundsListFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_funds_list, container, false)
 
-        val bundle = arguments
-        val jsonString = bundle?.getString("funds")
-        val funds = Gson().fromJson<List<Fund>>(jsonString!!)
+        val funds = Funds.all
 
         this.fundsGrouped = funds.groupBy { fund -> fund.specification.fundMainStrategy.name }
 

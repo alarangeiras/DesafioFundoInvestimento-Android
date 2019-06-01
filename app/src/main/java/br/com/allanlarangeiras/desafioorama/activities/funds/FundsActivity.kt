@@ -2,14 +2,13 @@ package br.com.allanlarangeiras.desafioorama.activities.funds
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.adapters.ListFundsTabAdapter
+import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoBottomSheetDialogFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.FundsListFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.TopFundsFragment
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_funds.*
 import kotlinx.android.synthetic.main.include_app_bar.*
 
@@ -21,22 +20,11 @@ class FundsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_funds)
 
-        val extras = intent.extras
-        val jsonString = extras?.getString("funds")
-        this.funds = Gson().fromJson(jsonString, funds::class.java)
-
-        Log.i(this::class.java.simpleName, jsonString)
-
         toolbar.title = getText(R.string.funds)
         setSupportActionBar(toolbar)
 
-        val bundle = Bundle()
-        bundle.putString("funds", jsonString)
-
         val topFundsFragment = TopFundsFragment()
-        topFundsFragment.arguments = bundle
         val fundsListFragment = FundsListFragment()
-        fundsListFragment.arguments = bundle
 
         val tabAdapter = ListFundsTabAdapter(supportFragmentManager)
         tabAdapter.addFragment(topFundsFragment, getString(R.string.top_funds))
@@ -48,6 +36,17 @@ class FundsActivity : AppCompatActivity() {
         tab.getTabAt(1)?.select()
     }
 
+    fun showInfoBottomSheet(fund: Fund) {
+        val infoBottomSheet = InfoBottomSheetDialogFragment()
+        val bundle = Bundle()
+        bundle.putString("macroTitle", fund.specification.fundMacroStrategy.name)
+        bundle.putString("macroDescription", fund.specification.fundMacroStrategy.explanation)
+        bundle.putString("mainTitle", fund.specification.fundMainStrategy.name)
+        bundle.putString("mainDescription", fund.specification.fundMainStrategy.explanation)
+        infoBottomSheet.arguments = bundle
+        infoBottomSheet.show(supportFragmentManager, infoBottomSheet.tag)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
@@ -56,4 +55,6 @@ class FundsActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finishAffinity()
     }
+
+
 }
