@@ -1,11 +1,13 @@
 package br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.allanlarangeiras.desafioorama.R
+import br.com.allanlarangeiras.desafioorama.activities.fundDetail.FundDetailActivity
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import br.com.allanlarangeiras.desafioorama.services.FundsService
 
@@ -14,6 +16,12 @@ class TopFundsRVAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): TopFundsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_top_funds_list, null)
+        view.setOnClickListener(View.OnClickListener {
+            val intent = Intent(parent.context, FundDetailActivity::class.java)
+            val fund = topFunds[position]
+            intent.putExtra("fund", fund)
+            parent.context.startActivity(intent)
+        })
         return TopFundsViewHolder(view)
     }
 
