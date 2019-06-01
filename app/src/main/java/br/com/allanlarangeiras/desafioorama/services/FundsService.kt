@@ -10,8 +10,8 @@ object FundsService {
     val fundDetailFullProxy: FundDetailFullProxy =
         RetrofitUtil.buildOramaProxy(FundDetailFullProxy::class.java)
 
-    fun getPaginatedList(page:Int): Observable<List<Fund>> {
-        return fundDetailFullProxy.getPaginatedList(offset = page)
+    fun getFunds(): Observable<List<Fund>> {
+        return fundDetailFullProxy.getPaginatedList()
     }
 
 }

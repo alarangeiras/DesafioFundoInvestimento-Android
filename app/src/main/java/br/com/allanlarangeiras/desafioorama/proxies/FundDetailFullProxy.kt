@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface FundDetailFullProxy {
 
-    @GET("/json/fund_detail_full.json")
+    @GET("json/fund_detail_full.json")
     fun getPaginatedList(
         @Query("limit") limit:Int = 5,
         @Query("offset") offset:Int = 0): Observable<List<Fund>>
