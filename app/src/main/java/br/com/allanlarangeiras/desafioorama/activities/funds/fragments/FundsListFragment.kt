@@ -9,11 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.allanlarangeiras.desafioorama.R
-import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.FundsListRVAdapter
+import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.FundsListGroupRVAdapter
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.*
 
 class FundsListFragment: Fragment() {
 
@@ -34,11 +33,7 @@ class FundsListFragment: Fragment() {
 
         this.recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
             layoutManager = linearLayoutManager
-            adapter = FundsListRVAdapter(fundsGrouped)
-        }
-
-        for (item in this.fundsGrouped) {
-            Log.i(this::class.java.simpleName, item.key)
+            adapter = FundsListGroupRVAdapter(activity!!, fundsGrouped)
         }
 
         return view

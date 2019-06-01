@@ -1,5 +1,7 @@
 package br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters
 
+import android.support.v4.app.FragmentActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,9 @@ import android.widget.TextView
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 
-class FundsListRVAdapter(
-    private val fundsGrouped: Map<String, List<Fund>>): RecyclerView.Adapter<FundsListRVAdapter.FundsViewHolder>() {
+class FundsListGroupRVAdapter(
+    private val activity: FragmentActivity,
+    private val fundsGrouped: Map<String, List<Fund>>): RecyclerView.Adapter<FundsListGroupRVAdapter.FundsViewHolder>() {
 
     private var titles: List<String>
     private var content: List<List<Fund>>
@@ -30,13 +33,19 @@ class FundsListRVAdapter(
 
     override fun onBindViewHolder(holder: FundsViewHolder, position: Int) {
         val title = titles.get(position)
-        val content = content.get(position)
-        val subTitle = content[0].specification.fundMacroStrategy.name
+        val lineContent = content.get(position)
+        val subTitle = lineContent[0].specification.fundMacroStrategy.name
         holder.title.text = title
         holder.subtitle.text = "($subTitle)"
 
-    }
+        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
+        holder.recyclerView.apply {
+            layoutManager = linearLayoutManager
+            adapter = FundsHorizontalListRVAdapter(lineContent)
+        }
+
+    }
 
     class FundsViewHolder(
         parentView: View
@@ -44,10 +53,12 @@ class FundsListRVAdapter(
 
         val title: TextView
         val subtitle: TextView
+        val recyclerView: RecyclerView
 
         init{
             title = parentView.findViewById<TextView>(R.id.title)
             subtitle = parentView.findViewById<TextView>(R.id.subtitle)
+            recyclerView = parentView.findViewById<RecyclerView>(R.id.recyclerView)
         }
 
     }

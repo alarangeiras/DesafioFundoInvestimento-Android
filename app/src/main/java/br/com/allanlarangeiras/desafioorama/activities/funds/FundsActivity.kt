@@ -43,6 +43,7 @@ class FundsActivity : AppCompatActivity() {
         tabAdapter.addFragment(fundsListFragment, getString(R.string.funds_list))
 
         pager.adapter = tabAdapter
+        
         tab.setupWithViewPager(pager)
         tab.getTabAt(1)?.select()
     }

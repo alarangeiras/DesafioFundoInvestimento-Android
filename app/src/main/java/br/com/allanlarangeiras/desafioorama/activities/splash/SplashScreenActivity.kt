@@ -9,7 +9,6 @@ import br.com.allanlarangeiras.desafioorama.activities.funds.FundsActivity
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_splash_screen.*
-import java.io.Serializable
 
 class SplashScreenActivity: AppCompatActivity() {
 
