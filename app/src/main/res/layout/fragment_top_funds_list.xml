@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:card_view="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+            android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardUseCompatPadding="true">
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <View   android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorPrimary" />
+            <View android:layout_width="5dp"
+                  android:layout_height="match_parent"
+                  android:background="@color/colorPrimary"/>
 
             <android.support.constraint.ConstraintLayout
                     android:layout_width="150dp"
@@ -39,26 +40,26 @@
                         android:textColor="@color/colorPrimary"
                         android:textAlignment="center"
                         android:textStyle="bold"
-                        android:text="Simple Name" />
+                        android:text="Simple Name"/>
 
             </android.support.constraint.ConstraintLayout>
             <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/colorPrimary" />
+                    android:background="@color/colorPrimary"/>
 
             <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/m12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp" />
+                        android:id="@+id/m12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"/>
 
                 <TextView
                         android:id="@+id/lblMinimumApplication"
@@ -67,7 +68,7 @@
                         app:layout_constraintStart_toStartOf="@id/m12"
                         app:layout_constraintTop_toBottomOf="@id/m12"
                         android:layout_marginTop="5dp"
-                        android:text="@string/minimum_application" />
+                        android:text="@string/minimum_application"/>
 
                 <TextView
                         android:id="@+id/minimumApplication"

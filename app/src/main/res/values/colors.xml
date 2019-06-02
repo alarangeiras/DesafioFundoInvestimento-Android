@@ -3,4 +3,5 @@
     <color name="colorPrimary">#91b96d</color>
     <color name="colorPrimaryDark">#91b96d</color>
     <color name="colorAccent">#91b96d</color>
+    <color name="tabBackground">#EDEDED</color>
 </resources>
