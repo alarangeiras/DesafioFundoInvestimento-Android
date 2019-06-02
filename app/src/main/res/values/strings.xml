@@ -4,5 +4,12 @@
     <string name="top_funds">Top Fundos</string>
     <string name="funds_list">Lista de Fundos</string>
     <string name="minimum_application">Aplicação Mínima</string>
+    <string name="info">Informações</string>
     <string name="understand_the_strategy">Entenda a estratégia</string>
+    <string name="info_title">Referente ao TOP Fundos</string>
+    <string name="info_description">
+        O TOP Fundos apresenta para você os fundos
+        que obtiveram a maior rentabilidade nos últimos
+        12 meses e estão adequados ao seu perfil de investidor
+    </string>
 </resources>

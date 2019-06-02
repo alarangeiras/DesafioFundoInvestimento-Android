@@ -3,9 +3,11 @@ package br.com.allanlarangeiras.desafioorama.activities.funds
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
+import android.view.MenuItem
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.adapters.ListFundsTabAdapter
 import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoBottomSheetDialogFragment
+import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoGeneralBottomSheetDialogFragmnet
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.FundsListFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.TopFundsFragment
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
@@ -48,6 +50,16 @@ class FundsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.info -> {
+                val infoBottomSheet = InfoGeneralBottomSheetDialogFragmnet()
+                infoBottomSheet.show(supportFragmentManager, infoBottomSheet.tag)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "ORAMA_BASE_URL", "\"https://s3.amazonaws.com/orama-media/\""
+            buildConfigField "String", "ORAMA_BASE_URL", "\"https://mocks-alarangeiras.herokuapp.com/orama/\""
         }
         release {
             buildConfigField "String", "ORAMA_BASE_URL", "\"https://s3.amazonaws.com/orama-media/\""

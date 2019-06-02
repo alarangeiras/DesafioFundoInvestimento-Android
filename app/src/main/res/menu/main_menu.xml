@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_info"
             app:showAsAction="ifRoom" />
     <item
-            android:id="@+id/action_search"
+            android:id="@+id/filter"
             android:orderInCategory="200"
             android:title="Filter"
             android:icon="@drawable/ic_filter"

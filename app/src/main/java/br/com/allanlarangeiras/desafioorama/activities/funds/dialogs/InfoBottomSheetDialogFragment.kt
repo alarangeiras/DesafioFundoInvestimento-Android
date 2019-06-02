@@ -1,8 +1,6 @@
 package br.com.allanlarangeiras.desafioorama.activities.funds.dialogs
 
-import android.app.Dialog
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,26 +29,5 @@ class InfoBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
         return contentView
     }
-
-//    override fun setupDialog(dialog: Dialog?, style: Int) {
-//        val contentView = View.inflate(context, R.layout.fragment_info_bottomsheet, null)
-//        val macroTitleTextView = contentView.findViewById<TextView>(R.id.macroTitle)
-//        val macroDescriptionTextView = contentView.findViewById<TextView>(R.id.macroDescription)
-//        val mainTitleTextView = contentView.findViewById<TextView>(R.id.mainTitle)
-//        val mainDescriptionTextView = contentView.findViewById<TextView>(R.id.mainDescription)
-//
-//        val bundle = arguments
-//
-//        macroTitleTextView.text = bundle?.getString("macroTitle")
-//        macroDescriptionTextView.text = bundle?.getString("macroDescription")
-//        mainTitleTextView.text = bundle?.getString("mainTitle")
-//        mainDescriptionTextView.text = bundle?.getString("mainDescription")
-//
-//        dialog!!.setContentView(contentView)
-//
-//        val behavior = BottomSheetBehavior.from(contentView)
-//        behavior.peekHeight = 400
-//
-//    }
 
 }
