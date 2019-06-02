@@ -17,9 +17,9 @@ object FundsService {
         return fundDetailFullProxy.getPaginatedList()
     }
 
-    fun getTopFunds():List<Fund> {
+    fun getTopFunds():MutableList<Fund> {
         val topFunds = Funds.all.sortedByDescending { fund: Fund -> fund.profitabilities.m12 }
-        return topFunds.slice(0..4)
+        return topFunds.slice(0..4) as MutableList<Fund>
     }
 
     fun formatM12(m12: Float): String {
@@ -49,7 +49,7 @@ object FundsService {
         return groupedFunds as MutableMap<String, List<Fund>>
     }
 
-    fun filterGrouped(macroStrategy: String): Map<out String, List<Fund>> {
+    fun filterGroupedByMacroStrategy(macroStrategy: String): Map<out String, List<Fund>> {
         if (macroStrategy.equals("Todos", ignoreCase = true)) {
             return getGroupedFunds()
         }
@@ -57,6 +57,19 @@ object FundsService {
         return getGroupedFunds(Funds.all.filter {
             it.specification.fundMacroStrategy.name.equals(macroStrategy, ignoreCase = true)
         })
+    }
+
+    fun filterGroupedByAmount(amount: Double): Map<out String, List<Fund>> {
+        return getGroupedFunds(Funds.all.filter {
+            it.operability.minimumInitialApplicationAmount >= amount
+        })
+    }
+
+    fun filterByAmount(amount: Double): List<Fund> {
+        return Funds.all.filter {
+            it.operability.minimumInitialApplicationAmount >= amount
+        }.sortedByDescending { fund: Fund -> fund.profitabilities.m12 }
+            .slice(0..4)
     }
 
 

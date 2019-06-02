@@ -11,11 +11,14 @@ import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoBottomS
 import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoGeneralBottomSheetDialogFragmnet
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.FundsListFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.TopFundsFragment
+import br.com.allanlarangeiras.desafioorama.model.actions.FilterByMinimumAmount
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import kotlinx.android.synthetic.main.activity_funds.*
 import kotlinx.android.synthetic.main.include_app_bar.*
 
 class FundsActivity : AppCompatActivity() {
+
+    private lateinit var allTabs: List<FilterByMinimumAmount>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,8 @@ class FundsActivity : AppCompatActivity() {
 
         val topFundsFragment = TopFundsFragment()
         val fundsListFragment = FundsListFragment()
+
+        allTabs = listOf<FilterByMinimumAmount>(topFundsFragment, fundsListFragment)
 
         val tabAdapter = ListFundsTabAdapter(supportFragmentManager)
         tabAdapter.addFragment(topFundsFragment, getString(R.string.top_funds))
@@ -60,7 +65,9 @@ class FundsActivity : AppCompatActivity() {
                 infoBottomSheet.show(supportFragmentManager, infoBottomSheet.tag)
             }
             R.id.filter -> {
+                val selectedTab = allTabs[tab.selectedTabPosition]
                 val filterBottomSheet = FilterBottomSheetDialogFragment()
+                filterBottomSheet.filterable = selectedTab
                 filterBottomSheet.show(supportFragmentManager, filterBottomSheet.tag)
             }
         }

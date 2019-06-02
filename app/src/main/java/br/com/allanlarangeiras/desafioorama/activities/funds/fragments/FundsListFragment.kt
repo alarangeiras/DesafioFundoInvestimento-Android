@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.FundsListGroupRVAdapter
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.MacroStrategiesRVAdapter
+import br.com.allanlarangeiras.desafioorama.model.actions.FilterByMinimumAmount
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
 import br.com.allanlarangeiras.desafioorama.services.FundsService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class FundsListFragment: Fragment() {
-
+class FundsListFragment: Fragment(), FilterByMinimumAmount {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var fundsGrouped: MutableMap<String, List<Fund>>
@@ -45,7 +45,7 @@ class FundsListFragment: Fragment() {
     }
 
     fun filterByMacroStrategy(macroStrategy: String) {
-        val filteredMacroStrategy = FundsService.filterGrouped(macroStrategy)
+        val filteredMacroStrategy = FundsService.filterGroupedByMacroStrategy(macroStrategy)
 
         this.fundsGrouped.clear()
         this.fundsGrouped.putAll(filteredMacroStrategy)
@@ -55,5 +55,13 @@ class FundsListFragment: Fragment() {
 
     inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 
+    override fun filterByAmount(amount: Double) {
+        val filteredByAmount = FundsService.filterGroupedByAmount(amount)
+
+        this.fundsGrouped.clear()
+        this.fundsGrouped.putAll(filteredByAmount)
+
+        this.recyclerView.adapter?.notifyDataSetChanged()
+    }
 
 }
