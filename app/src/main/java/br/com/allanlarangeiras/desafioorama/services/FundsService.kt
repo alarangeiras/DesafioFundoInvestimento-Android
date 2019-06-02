@@ -1,6 +1,7 @@
 package br.com.allanlarangeiras.desafioorama.services
 
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
+import br.com.allanlarangeiras.desafioorama.model.dto.FundMacroStrategy
 import br.com.allanlarangeiras.desafioorama.model.dto.Funds
 import br.com.allanlarangeiras.desafioorama.proxies.FundDetailFullProxy
 import br.com.allanlarangeiras.desafioorama.utils.NumberUtils
@@ -36,5 +37,27 @@ object FundsService {
         }
         return applicationAmountString
     }
+
+    fun getMacroStrategies(): MutableList<String> {
+        return Funds.all.groupBy {fund -> fund.specification.fundMacroStrategy.name }
+            .keys.toMutableList()
+    }
+
+    fun getGroupedFunds(funds: List<Fund> = Funds.all): MutableMap<String, List<Fund>> {
+        var groupedFunds = funds.groupBy { fund -> fund.specification.fundMainStrategy.name }
+
+        return groupedFunds as MutableMap<String, List<Fund>>
+    }
+
+    fun filterGrouped(macroStrategy: String): Map<out String, List<Fund>> {
+        if (macroStrategy.equals("Todos", ignoreCase = true)) {
+            return getGroupedFunds()
+        }
+
+        return getGroupedFunds(Funds.all.filter {
+            it.specification.fundMacroStrategy.name.equals(macroStrategy, ignoreCase = true)
+        })
+    }
+
 
 }

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.adapters.ListFundsTabAdapter
+import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.FilterBottomSheetDialogFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoBottomSheetDialogFragment
 import br.com.allanlarangeiras.desafioorama.activities.funds.dialogs.InfoGeneralBottomSheetDialogFragmnet
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.FundsListFragment
@@ -57,6 +58,10 @@ class FundsActivity : AppCompatActivity() {
             R.id.info -> {
                 val infoBottomSheet = InfoGeneralBottomSheetDialogFragmnet()
                 infoBottomSheet.show(supportFragmentManager, infoBottomSheet.tag)
+            }
+            R.id.filter -> {
+                val filterBottomSheet = FilterBottomSheetDialogFragment()
+                filterBottomSheet.show(supportFragmentManager, filterBottomSheet.tag)
             }
         }
         return super.onOptionsItemSelected(item)

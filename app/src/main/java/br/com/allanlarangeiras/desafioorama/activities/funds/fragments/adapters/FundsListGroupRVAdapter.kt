@@ -1,6 +1,5 @@
 package br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters
 
-import android.media.Image
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,26 +16,21 @@ class FundsListGroupRVAdapter(
     private val activity: FragmentActivity,
     private val fundsGrouped: Map<String, List<Fund>>): RecyclerView.Adapter<FundsListGroupRVAdapter.FundsViewHolder>() {
 
-    private var titles: List<String>
-    private var content: List<List<Fund>>
-
-    init {
-        this.titles = fundsGrouped.keys.toList()
-        this.content = fundsGrouped.values.toList()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): FundsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_fund_group_list, parent, false)
         return FundsViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return this.titles.size
+        return fundsGrouped.size
     }
 
     override fun onBindViewHolder(holder: FundsViewHolder, position: Int) {
-        val title = titles.get(position)
-        val lineContent = content.get(position)
+        val titles = fundsGrouped.keys.toList()
+        val content = fundsGrouped.values.toList()
+
+        val title = titles[position]
+        val lineContent = content[position]
         val subTitle = lineContent[0].specification.fundMacroStrategy.name
         holder.title.text = title
         holder.subtitle.text = "($subTitle)"
@@ -55,8 +49,7 @@ class FundsListGroupRVAdapter(
     }
 
     class FundsViewHolder(
-        parentView: View
-    ): RecyclerView.ViewHolder(parentView) {
+        parentView: View): RecyclerView.ViewHolder(parentView) {
 
         val questionMark: ImageView
         val title: TextView

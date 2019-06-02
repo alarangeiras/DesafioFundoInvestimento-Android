@@ -11,7 +11,7 @@ import br.com.allanlarangeiras.desafioorama.R
 class InfoGeneralBottomSheetDialogFragmnet: BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val contentView = inflater.inflate(R.layout.fragment_info, container, false)
+        val contentView = inflater.inflate(R.layout.fragment_info_product_bottom_sheet, container, false)
 
         val titleTextView = contentView.findViewById<TextView>(R.id.infoTitle)
         val contentTextView = contentView.findViewById<TextView>(R.id.infoContent)
