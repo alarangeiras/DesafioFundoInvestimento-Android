@@ -2,12 +2,12 @@ package br.com.allanlarangeiras.desafioorama.activities.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.FundsActivity
-import br.com.allanlarangeiras.desafioorama.model.dto.Fund
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreenActivity: AppCompatActivity() {
@@ -23,7 +23,6 @@ class SplashScreenActivity: AppCompatActivity() {
 
     fun goToHome() {
         val goToHome = Intent(this, FundsActivity::class.java)
-        hideProgressBar()
         startActivity(goToHome)
     }
 
@@ -33,5 +32,20 @@ class SplashScreenActivity: AppCompatActivity() {
 
     fun hideProgressBar() {
         progressBar.visibility = View.INVISIBLE
+    }
+
+    fun treatError(error: Throwable?) {
+        Log.e(this::class.java.simpleName, error?.message)
+        AlertDialog.Builder(this)
+            .setTitle("Erro")
+            .setMessage("Houve um erro ao carregar os dados do servidor.")
+            .setPositiveButton("Tentar novamente") { dialog, which ->
+                splashScreenPresenter.getFunds()
+            }
+            .setNegativeButton("Fechar o aplicativo") { dialog, which ->
+                finishAffinity()
+            }
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
     }
 }
