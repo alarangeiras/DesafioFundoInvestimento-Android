@@ -18,7 +18,7 @@ class FilterBottomSheetDialogFragment: BottomSheetDialogFragment() {
     var filterable: FilterByMinimumAmount? = null
 
     companion object {
-        var selectedAmount: AmountRange = AmountRange.AMOUNT_1
+        var selectedAmount: AmountRange = AmountRange.AMOUNT_8
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,13 +29,13 @@ class FilterBottomSheetDialogFragment: BottomSheetDialogFragment() {
         val filterButton = contentView.findViewById<Button>(R.id.filterButton)
 
         minimumApplication.progress = selectedAmount.index
-        lblMinimumApplication.text = FundsService.formatAmount(selectedAmount.amount)
+        lblMinimumApplication.text = "Até ${FundsService.formatAmount(selectedAmount.amount)}"
 
         minimumApplication.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 selectedAmount = AmountRange.createByProgress(progress)
-                lblMinimumApplication.text = FundsService.formatAmount(selectedAmount.amount)
+                lblMinimumApplication.text = "Até ${FundsService.formatAmount(selectedAmount.amount)}"
 
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}

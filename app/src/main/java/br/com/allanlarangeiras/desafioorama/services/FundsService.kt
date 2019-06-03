@@ -53,11 +53,11 @@ object FundsService {
 
     fun getConditionResult(fund: Fund, filter: Filter): Boolean {
         if (filter.macroStrategy != "Todos") {
-            return fund.operability.minimumInitialApplicationAmount >= filter.amount.amount &&
+            return fund.operability.minimumInitialApplicationAmount <= filter.amount.amount &&
                     fund.specification.fundMacroStrategy.name.equals(filter.macroStrategy, ignoreCase = true)
         }
 
-        return fund.operability.minimumInitialApplicationAmount >= filter.amount.amount
+        return fund.operability.minimumInitialApplicationAmount <= filter.amount.amount
     }
 
 
