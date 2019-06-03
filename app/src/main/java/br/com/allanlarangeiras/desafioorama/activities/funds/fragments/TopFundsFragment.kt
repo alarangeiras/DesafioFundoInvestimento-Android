@@ -11,6 +11,8 @@ import br.com.allanlarangeiras.desafioorama.R
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.TopFundsRVAdapter
 import br.com.allanlarangeiras.desafioorama.model.actions.FilterByMinimumAmount
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
+import br.com.allanlarangeiras.desafioorama.model.types.AmountRange
+import br.com.allanlarangeiras.desafioorama.model.types.Filter
 import br.com.allanlarangeiras.desafioorama.services.FundsService
 
 class TopFundsFragment: Fragment(), FilterByMinimumAmount {
@@ -18,10 +20,12 @@ class TopFundsFragment: Fragment(), FilterByMinimumAmount {
     private lateinit var recyclerView: RecyclerView
     private lateinit var topFunds: MutableList<Fund>
 
+    var filter = Filter()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_top_funds, container, false)
 
-        topFunds = FundsService.getTopFunds()
+        topFunds = FundsService.filterSorted(filter)
         val linearLayoutManager = LinearLayoutManager(activity)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.topFundsList).apply {
@@ -33,8 +37,9 @@ class TopFundsFragment: Fragment(), FilterByMinimumAmount {
 
     }
 
-    override fun filterByAmount(amount: Double) {
-        val filteredByAmount = FundsService.filterByAmount(amount)
+    override fun filterByAmount(amount: AmountRange) {
+        filter.amount = amount
+        val filteredByAmount = FundsService.filterSorted(filter)
 
         this.topFunds.clear()
         this.topFunds.addAll(filteredByAmount)

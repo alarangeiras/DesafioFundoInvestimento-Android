@@ -2,7 +2,6 @@ package br.com.allanlarangeiras.desafioorama.activities.funds.dialogs
 
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,11 @@ import br.com.allanlarangeiras.desafioorama.services.FundsService
 
 class FilterBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
-    private lateinit var selectedAmount: AmountRange
     var filterable: FilterByMinimumAmount? = null
+
+    companion object {
+        var selectedAmount: AmountRange = AmountRange.AMOUNT_1
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val contentView = inflater.inflate(R.layout.fragment_filter_bottom_sheet, container, false)
@@ -25,8 +27,6 @@ class FilterBottomSheetDialogFragment: BottomSheetDialogFragment() {
         val minimumApplication = contentView.findViewById<SeekBar>(R.id.minimumApplication)
         val lblMinimumApplication = contentView.findViewById<TextView>(R.id.lblMinimumApplication)
         val filterButton = contentView.findViewById<Button>(R.id.filterButton)
-
-        selectedAmount = AmountRange.AMOUNT_8
 
         minimumApplication.progress = selectedAmount.index
         lblMinimumApplication.text = FundsService.formatAmount(selectedAmount.amount)
@@ -43,12 +43,10 @@ class FilterBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
         })
 
-        filterButton.setOnClickListener(View.OnClickListener {
-            filterable?.filterByAmount(selectedAmount.amount)
+        filterButton.setOnClickListener {
+            filterable?.filterByAmount(selectedAmount)
             this@FilterBottomSheetDialogFragment.dismiss()
-        })
-
-        Log.i(this::class.java.simpleName, FundsService.getMacroStrategies().toString())
+        }
 
         return contentView
     }

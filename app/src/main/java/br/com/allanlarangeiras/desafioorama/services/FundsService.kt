@@ -1,8 +1,8 @@
 package br.com.allanlarangeiras.desafioorama.services
 
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
-import br.com.allanlarangeiras.desafioorama.model.dto.FundMacroStrategy
 import br.com.allanlarangeiras.desafioorama.model.dto.Funds
+import br.com.allanlarangeiras.desafioorama.model.types.Filter
 import br.com.allanlarangeiras.desafioorama.proxies.FundDetailFullProxy
 import br.com.allanlarangeiras.desafioorama.utils.NumberUtils
 import br.com.allanlarangeiras.desafioorama.utils.RetrofitUtil
@@ -15,11 +15,6 @@ object FundsService {
 
     fun getFunds(): Observable<List<Fund>> {
         return fundDetailFullProxy.getPaginatedList()
-    }
-
-    fun getTopFunds():MutableList<Fund> {
-        val topFunds = Funds.all.sortedByDescending { fund: Fund -> fund.profitabilities.m12 }
-        return topFunds.slice(0..4) as MutableList<Fund>
     }
 
     fun formatM12(m12: Float): String {
@@ -43,33 +38,26 @@ object FundsService {
             .keys.toMutableList()
     }
 
-    fun getGroupedFunds(funds: List<Fund> = Funds.all): MutableMap<String, List<Fund>> {
-        var groupedFunds = funds.groupBy { fund -> fund.specification.fundMainStrategy.name }
-
-        return groupedFunds as MutableMap<String, List<Fund>>
+    fun filterGrouped(filter: Filter): MutableMap<String, List<Fund>> {
+        return Funds.all.filter {
+            getConditionResult(it, filter)
+        }.groupBy { fund -> fund.specification.fundMainStrategy.name } as MutableMap<String, List<Fund>>
     }
 
-    fun filterGroupedByMacroStrategy(macroStrategy: String): Map<out String, List<Fund>> {
-        if (macroStrategy.equals("Todos", ignoreCase = true)) {
-            return getGroupedFunds()
+    fun filterSorted(filter: Filter): MutableList<Fund> {
+        return Funds.all.filter {
+            getConditionResult(it, filter)
+        }.sortedByDescending { fund: Fund -> fund.profitabilities.m12 }
+            .slice(0..4) as MutableList<Fund>
+    }
+
+    fun getConditionResult(fund: Fund, filter: Filter): Boolean {
+        if (filter.macroStrategy != "Todos") {
+            return fund.operability.minimumInitialApplicationAmount >= filter.amount.amount &&
+                    fund.specification.fundMacroStrategy.name.equals(filter.macroStrategy, ignoreCase = true)
         }
 
-        return getGroupedFunds(Funds.all.filter {
-            it.specification.fundMacroStrategy.name.equals(macroStrategy, ignoreCase = true)
-        })
-    }
-
-    fun filterGroupedByAmount(amount: Double): Map<out String, List<Fund>> {
-        return getGroupedFunds(Funds.all.filter {
-            it.operability.minimumInitialApplicationAmount >= amount
-        })
-    }
-
-    fun filterByAmount(amount: Double): List<Fund> {
-        return Funds.all.filter {
-            it.operability.minimumInitialApplicationAmount >= amount
-        }.sortedByDescending { fund: Fund -> fund.profitabilities.m12 }
-            .slice(0..4)
+        return fund.operability.minimumInitialApplicationAmount >= filter.amount.amount
     }
 
 

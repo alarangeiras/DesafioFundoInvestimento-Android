@@ -12,19 +12,22 @@ import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.
 import br.com.allanlarangeiras.desafioorama.activities.funds.fragments.adapters.MacroStrategiesRVAdapter
 import br.com.allanlarangeiras.desafioorama.model.actions.FilterByMinimumAmount
 import br.com.allanlarangeiras.desafioorama.model.dto.Fund
+import br.com.allanlarangeiras.desafioorama.model.types.AmountRange
+import br.com.allanlarangeiras.desafioorama.model.types.Filter
 import br.com.allanlarangeiras.desafioorama.services.FundsService
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class FundsListFragment: Fragment(), FilterByMinimumAmount {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var fundsGrouped: MutableMap<String, List<Fund>>
 
+    var filter = Filter()
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_funds_list, container, false) as View
 
-        fundsGrouped = FundsService.getGroupedFunds()
+        fundsGrouped = FundsService.filterGrouped(filter)
 
         val linearLayoutManager = LinearLayoutManager(activity)
 
@@ -45,7 +48,8 @@ class FundsListFragment: Fragment(), FilterByMinimumAmount {
     }
 
     fun filterByMacroStrategy(macroStrategy: String) {
-        val filteredMacroStrategy = FundsService.filterGroupedByMacroStrategy(macroStrategy)
+        filter.macroStrategy = macroStrategy
+        val filteredMacroStrategy = FundsService.filterGrouped(filter)
 
         this.fundsGrouped.clear()
         this.fundsGrouped.putAll(filteredMacroStrategy)
@@ -53,10 +57,9 @@ class FundsListFragment: Fragment(), FilterByMinimumAmount {
         this.recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
-
-    override fun filterByAmount(amount: Double) {
-        val filteredByAmount = FundsService.filterGroupedByAmount(amount)
+    override fun filterByAmount(amount: AmountRange) {
+        filter.amount = amount
+        val filteredByAmount = FundsService.filterGrouped(filter)
 
         this.fundsGrouped.clear()
         this.fundsGrouped.putAll(filteredByAmount)

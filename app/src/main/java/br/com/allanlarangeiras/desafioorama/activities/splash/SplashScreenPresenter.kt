@@ -15,15 +15,14 @@ class SplashScreenPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doAfterTerminate({ activity.hideProgressBar() })
-            .subscribe(
-                {funds ->
-                    Funds.all = funds
-                    activity.goToHome()
-                },
-                {error ->
-                    activity.treatError(error)
-                }
-            )
+            .doOnNext { funds ->
+                Funds.all = funds
+                activity.goToHome()
+            }
+            .doOnError {error ->
+                activity.treatError(error)
+            }
+            .subscribe()
     }
 
 
